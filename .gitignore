@@ -1,0 +1,5 @@
+# Ignore data directory
+data/
+
+# Ignore generated binary
+cosplayer_data
