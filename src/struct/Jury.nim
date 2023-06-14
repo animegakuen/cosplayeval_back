@@ -10,7 +10,7 @@ type
 
   Vote* = object
     cosplayerId: int32
-    juryId: int
+    juryName: string
     score: float32
 
 proc readJuries* (): string =
