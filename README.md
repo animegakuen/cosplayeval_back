@@ -1,6 +1,6 @@
 # cosplayer\_data
 
-This is the back-end for [cosplayer\_evaluation](https://github.com/animegakuen/cosplayer_evaluation), containing all the logic for reading and writing data related to contestants in our events.
+This is the back-end for [cosplayer\_evaluation](https://github.com/animegakuen/cosplayeval_front), containing all the logic for reading and writing data related to contestants in our events.
 
 It is only missing image writing capabilities, which will be done in a later time.
 
@@ -8,11 +8,15 @@ It is only missing image writing capabilities, which will be done in a later tim
 
 Firstly you need `nim` installed, which I recommend using [`choosenim`](https://github.com/dom96/choosenim) for that. Once installed you can just `cd` into this project and run:
 
-1. `nimble install` to install the dependencies of this project.
+1. `nimble install -d` to install the dependencies of this project.
 2. `nimble build -d:release` to build it in release form.
-3. `./cosplayer_data` to run the compiled binary.
+3. `./cosplayeval_back` to run the compiled binary.
 
 By default it runs in port `5000` using `http` so you can do requests to `http://localhost:5000` (or whatever internal/public IP).
+
+## Configuration
+
+By changing [`api.cfg`](./api.cfg) you can change the path of where your cosplayer and vote data is stored, there are `JSON` files and are by default in `./data/cosplayers.json` and `./data/votes.json`.
 
 # Endpoints
 
@@ -25,9 +29,11 @@ This returns you a _JSON_ with all the currently registered cosplayers, if none 
 You can use this endpoint to register a cosplayer in the event, here's a TypeScript interface of it:
 ```ts
 interface CosplayerPayload {
+  characterName: string
   images: string[]
   name: string
-  stageName: string
+  nickname: string
+  phoneNumber: string
 }
 
 interface Cosplayer extends CosplayerPayload {
