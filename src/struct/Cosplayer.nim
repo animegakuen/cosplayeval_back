@@ -1,3 +1,4 @@
+from os import walkDir, splitFile, joinPath
 from parsecfg import loadConfig, getSectionValue
 from std/json import `%`, `$`, parseJson, pretty, to
 
@@ -37,3 +38,14 @@ proc writeCosplayer* (cosplayer: CosplayerPayload): void =
 
   var filePath = loadConfig("api.cfg").getSectionValue("Paths", "cosplayers")
   writeFile(filePath, $response)
+
+proc readCosplayerImages* (id: string): string =
+  var filePath = loadConfig("api.cfg").getSectionValue("Paths", "cosplayerData")
+
+  var files: seq[string]
+
+  for kind, path in walkDir joinPath(filePath, id):
+    files.add(path)
+
+  return (%files).pretty()
+

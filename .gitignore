@@ -2,4 +2,5 @@
 data/
 
 # Ignore generated binary
-cosplayer_data
+cosplayeval_back
+cosplayeval_back.exe
