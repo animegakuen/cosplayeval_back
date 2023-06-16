@@ -1,4 +1,4 @@
-# cosplayer\_data
+# cosplayeval\_back
 
 This is the back-end for [cosplayer\_evaluation](https://github.com/animegakuen/cosplayeval_front), containing all the logic for reading and writing data related to contestants in our events.
 
@@ -43,24 +43,18 @@ interface Cosplayer extends CosplayerPayload {
 
 As you can see, `CosplayerPayload` is what we expect to receive, while `Cosplayer` is what you will receive from sending a `GET` to the same endpoint.
 
-## GET `/juries`
+## GET `/cosplayers/images/:id`
 
-This returns you a _JSON_ with all the currently registered juries, if none are registered it returns you an empty array (`[]`). Look at the `POST` description below for an interface of what you will receive.
+You can interact with this endpoint to retrieve images a cosplayer, these are based off of their ID in the json file containing the data from the cosplayers.
 
-## POST `/juries`
-
-You can use this endpoint to register a jury judging the cosplayers, here's a TypeScript interface of it:
-```ts
-interface JuryPayload {
-  name: string
-}
-
-interface Jury extends JuryPayload {
-  id: number // 32 bit integer.
-}
+So if you have let's say:
+```cfg
+[Paths]
+cosplayers = "./data/cosplayers.json"
+cosplayerData = "./data/cosplayers"
 ```
 
-Like the `POST` in `/cosplayers`, `JuryPayload` is what we expect to receive while `Jury` is what you will receive when doing a `GET` request in the same endpoint.
+And then request `http://localhost:5000/cosplayers/images/1`, that will read out the contents of `./data/cosplayers/1`, if that directory doesn't exists it will just return you an empty array.
 
 ## GET `/votes`
 
@@ -68,7 +62,7 @@ With this you can see all the jury votes, separated by each vote - can be very m
 
 ## POST `/votes`
 
-This is what you use to register a jury's vote, you **can** use it even if a jury hasn't been registered yet. I decided to leave this to the front-end for now, having it make the decision to impede the user from submitting a vote if they haven't registered a jury yet.
+This is what you use to register a jury's vote, there is no database so all these IDs are fictional so it is technically possible to register a vote for a cosplayer that doesn't exists.
 
 Here's the interfaces in TypeScript:
 ```ts
