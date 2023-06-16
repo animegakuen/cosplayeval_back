@@ -27,7 +27,6 @@ router customRouter:
 
   post "/cosplayers":
     try:
-      echo request.body
       writeCosplayer(request.body.parseJson.to CosplayerPayload)
 
       resp(Http200, responseHeaders, "OK")

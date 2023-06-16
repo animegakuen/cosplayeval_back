@@ -19,9 +19,7 @@ proc readCosplayers* (): string =
   return readFile(filePath)
 
 proc writeCosplayer* (cosplayer: CosplayerPayload): void =
-  echo "D:"
   var cosplayers = readCosplayers().parseJson.to seq[Cosplayer]
-  echo ":)"
   
   cosplayers.add(Cosplayer(
     id: if cosplayers.len == 0: 1 else: cosplayers[cosplayers.len - 1].id + 1,
@@ -31,10 +29,8 @@ proc writeCosplayer* (cosplayer: CosplayerPayload): void =
     nickname: cosplayer.nickname,
     phoneNumber: cosplayer.phoneNumber,
   ))
-  echo ":o"
 
   var response = (%cosplayers).pretty()
-  echo "B)"
 
   var filePath = loadConfig("api.cfg").getSectionValue("Paths", "cosplayers")
   writeFile(filePath, $response)
