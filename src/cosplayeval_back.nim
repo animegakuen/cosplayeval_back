@@ -2,6 +2,7 @@ import jester
 
 from parsecfg import loadConfig, getSectionValue
 from std/json import parseJson, to
+from std/re import re
 
 from struct/Cosplayer import readCosplayers, writeCosplayer, readCosplayerImages, CosplayerPayload
 from struct/Vote import readVotes, writeVote, VotePayload
@@ -43,6 +44,9 @@ router customRouter:
       resp(Http500, responseHeaders, "No id was provided.")
     else:
       resp(Http200, responseHeaders, readCosplayerImages(id))
+
+  options re".*":
+    resp(Http200, responseHeaders, "OK")
 
 when isMainModule:
   var ip = loadConfig("api.cfg").getSectionValue("Config", "ip")
