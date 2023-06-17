@@ -2,7 +2,6 @@ import jester
 
 from parsecfg import loadConfig, getSectionValue
 from std/json import parseJson, to
-from std/re import re
 
 from struct/Cosplayer import readCosplayers, writeCosplayer, readCosplayerImages, CosplayerPayload
 from struct/Vote import readVotes, writeVote, VotePayload
@@ -23,8 +22,12 @@ router customRouter:
       resp(Http200, responseHeaders, "OK")
     except CatchableError:
       resp(Http500, responseHeaders, "Invalid JSON payload.")
+
   get "/votes":
     resp(Http200, responseHeaders, readVotes())
+
+  options "/votes":
+    resp(Http200, responseHeaders, "OK")
 
   post "/cosplayers":
     try:
@@ -37,6 +40,9 @@ router customRouter:
   get "/cosplayers":
       resp(Http200, responseHeaders, readCosplayers())
 
+  options "/cosplayers":
+    resp(Http200, responseHeaders, "OK")
+
   get "/cosplayers/images/@id":
     var id = @"id"
 
@@ -45,7 +51,7 @@ router customRouter:
     else:
       resp(Http200, responseHeaders, readCosplayerImages(id))
 
-  options re".*":
+  options "/cosplayers/images/@id":
     resp(Http200, responseHeaders, "OK")
 
 when isMainModule:
