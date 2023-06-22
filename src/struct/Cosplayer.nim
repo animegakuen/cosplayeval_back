@@ -9,6 +9,7 @@ type
     name: string
     nickname: string
     phoneNumber: string
+    origin: string
 
   Cosplayer = object of CosplayerPayload
     id: int32
@@ -28,6 +29,7 @@ proc writeCosplayer* (cosplayer: CosplayerPayload): void =
     name: cosplayer.name,
     nickname: cosplayer.nickname,
     phoneNumber: cosplayer.phoneNumber,
+    origin: cosplayer.origin
   ))
 
   var response = (%cosplayers).pretty()

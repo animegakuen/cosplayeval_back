@@ -33,6 +33,7 @@ interface CosplayerPayload {
   images: string[]
   name: string
   nickname: string
+  origin: string
   phoneNumber: string
 }
 
